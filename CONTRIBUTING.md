@@ -9,7 +9,7 @@ If there is an issue or a bug with the application, please open an issue so it c
 ### Pull Requests
 
 Taking matters into your own hands? Fine. Feel free to send pull requests, be it minor patches that fix spelling, or complete reworks of how things are handled.
-Please format your code properly using tabs.
+Please format your code properly using two spaces.
 
 ### Suggestions
 
