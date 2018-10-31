@@ -1,82 +1,95 @@
 const express = require('express');
+
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const icongen = require('icon-gen');
+const iconGen = require('icon-gen');
 const fs = require('fs-extra');
-const zipFolder = require('zip-folder');
+const archiver = require('archiver');
 const uniqid = require('uniqid');
-const exec = require('child-process-promise').exec;
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const htmlBeautify = require('js-beautify').html;
 
+const { window } = (new JSDOM('')).window;
+const DOMPurify = createDOMPurify(window);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({
-	'extended': 'true'
+  extended: 'true',
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.json({
-	type: 'application/vnd.api+json'
+  type: 'application/vnd.api+json',
 }));
 app.use(methodOverride());
 
 const port = process.env.PORT || 8080;
 
 app.get('/api/download/:dir', (req, res) => {
-	const tempDir = 'tmp/' + req.params.dir;
-	res.download(tempDir + '/icons.zip');
+  const tempDir = `tmp/${req.params.dir}`;
+  res.download(`${tempDir}/icons.zip`);
 
-	fs.remove(tempDir, () => {});
+  fs.remove(tempDir, () => {});
 });
 
 app.post('/api/convert', (req, res) => {
-	console.log("Converting");
-	console.log(req.body.image);
+  const svgData = htmlBeautify(DOMPurify.sanitize(req.body.image), { indent_size: 2 });
+  const tmpName = uniqid();
+  const dir = `./tmp/${tmpName}`;
+  const dist = `${dir}/dist`;
 
-	const tmp_name = uniqid();
-	const dir = './tmp/' + tmp_name;
-	const dist = dir + '/dist';
+  console.log('Converting SVG:');
+  console.log(svgData);
 
-	fs.ensureDir(dist, err => {
-		console.log(err);
+  fs.ensureDir(dist, (ensureDirErr) => {
+    if (ensureDirErr) {
+      console.log(ensureDirErr);
+    }
 
-		fs.writeFile(dist + "/image.svg", req.body.image, err => {
-			if (err) {
-				return console.log(err);
-			}
+    fs.writeFile(`${dist}/image.svg`, svgData, (writeFileErr) => {
+      if (writeFileErr) {
+        return console.log('Error while saving SVG:', writeFileErr);
+      }
 
-			console.log("The file was saved!");
+      console.log('SVG successfully saved');
 
-			const options = {
-				report: true
-			};
+      const options = {
+        report: true,
+      };
 
-			const cmd = 'icon-gen -i ' + dist + '/image.svg -o ' + dist + ' -r';
+      return iconGen(`${dist}/image.svg`, dist, options)
+        .then(() => {
+          const zipFile = fs.createWriteStream(`${dir}/icons.zip`);
+          const archive = archiver('zip');
+          archive.pipe(zipFile);
+          archive.directory(dist, false);
 
-			exec(cmd)
-				.then(function (result) {
-					zipFolder(dist, dir + '/icons.zip', err => {
-						if (err) {
-							console.log('oh no!', err);
-							res.send('error');
-						} else {
-							console.log('EXCELLENT');
-							res.send(tmp_name);
-						}
-					});
-				})
-				.catch(function (err) {
-					console.error(err);
-					res.send('error');
-				});
-		});
-	});
+          archive.on('error', (archiveErr) => {
+            console.log('Error while zipping folder:', archiveErr);
+            res.send('error');
+          });
+
+          zipFile.on('close', () => {
+            console.log('Zip successfully created');
+            res.send(tmpName);
+          });
+
+          archive.finalize();
+        })
+        .catch((iconGenErr) => {
+          console.error('Error while generating icons:', iconGenErr);
+          res.send('error');
+        });
+    });
+  });
 });
 
-app.get('*', function (req, res) {
-	res.sendfile('./public/index.html');
+app.get('*', (req, res) => {
+  res.sendfile('./public/index.html');
 });
 
 app.listen(port);
-console.log("app listening on " + port);
+console.log(`app listening on ${port}`);

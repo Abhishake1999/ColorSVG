@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint .; stylelint public/style.css; htmlhint public/index.html"
   },
   "repository": {
     "type": "git",
@@ -18,14 +19,25 @@
   },
   "homepage": "https://github.com/maticbasle/ColorSVG#readme",
   "dependencies": {
+    "archiver": "^3.0.0",
     "body-parser": "^1.18.3",
     "child-process-promise": "^2.2.1",
-    "express": "^4.16.3",
+    "dompurify": "^1.0.8",
+    "express": "^4.16.4",
     "fs-extra": "^7.0.0",
     "icon-gen": "^1.2.3",
+    "js-beautify": "^1.8.8",
+    "jsdom": "^13.0.0",
     "method-override": "^3.0.0",
     "morgan": "^1.9.1",
-    "uniqid": "^5.0.3",
-    "zip-folder": "^1.0.0"
+    "uniqid": "^5.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "htmlhint": "^0.10.1",
+    "stylelint": "^9.7.1",
+    "stylelint-config-standard": "^18.2.0"
   }
 }

@@ -1,0 +1,5 @@
+{
+  // required until https://github.com/htmlhint/HTMLHint/issues/263 is fixed
+  "tagname-lowercase": false,
+  "space-tab-mixed-disabled": "space2"
+}
