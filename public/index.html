@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="ColorSVG - Customize your icons!" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://colorsvg.herokuapp.com/" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/maticbasle/ColorSVG/master/showcase.png" />
-    <meta property="og:image:alt" content="ColorSVG" />
-    <meta property="og:description" content="A simple web application that allows users to easily modify SVG icon colors and then download for use." />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="ColorSVG - Customize your icons!"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://colorsvg.herokuapp.com/"/>
+    <meta property="og:image" content="https://raw.githubusercontent.com/maticbasle/ColorSVG/master/showcase.png"/>
+    <meta property="og:image:alt" content="ColorSVG"/>
+    <meta property="og:description" content="A simple web application that allows users to easily modify SVG icon colors and then download for use."/>
+    <meta property="og:locale" content="en_US"/>
     <title>ColorSVG - Customize your icons!</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-color-picker/3.4.8/angularjs-color-picker.min.css" rel="stylesheet">
@@ -123,6 +123,20 @@
             <polygon fill="#{{ accent }}" points="143,213.6 116.9,213.6 116.9,213.6 116.9,187.5 143,187.5 143,213.6"/>
             <path fill="#{{ accent }}" d="M116.9,187.5H95c0,0,0,0,0,0v-21.9c0,0,0,0,0,0h21.9c0,0,0,0,0,0V187.5z"/>
           </g>
+        </g>
+      </svg>
+      <!-- Spotify -->
+      <svg id="spotify" ng-show="icon.index == 4" xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" ng-class="icon.animation">
+        <defs>
+          <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="a">
+            <stop stop-opacity=".15" offset="0%" />
+            <stop stop-opacity="0" offset="100%" />
+          </linearGradient>
+        </defs>
+        <g fill="none" fill-rule="evenodd">
+          <circle fill="#{{ background }}" cx="512" cy="512" r="512" />
+          <path d="M449.5332 277.3333c150.3985 0 308.5196 30.933 424.0598 98.7937 15.5731 8.8106 26.389 22.1225 26.389 46.5062 0 27.9037-22.4424 47.9782-48.2981 47.9782-10.432 0-16.6185-2.5386-26.3891-7.8933-92.671-55.5727-236.5843-86.1858-375.5696-86.1858-69.418 0-139.9453 7.0613-204.5206 24.5971-7.4453 1.8773-16.8318 5.5893-26.261 5.5893-27.3065 0-48.277-21.6104-48.277-48.9168 0-27.8184 17.2372-43.4343 35.8397-48.9382 72.9806-21.5465 154.4518-31.5304 243.0056-31.5304M425.6617 448c134.0146 0 263.656 33.3863 365.6496 94.3777 17.0879 9.792 23.3811 22.2505 23.3811 40.469 0 22.165-17.6425 40.0849-39.9142 40.0849-11.1146 0-18.0905-4.48-25.6424-8.8746-83.2845-49.4288-198.718-82.2605-325.1168-82.2605-64.8313 0-120.7881 9.0879-167.1023 21.3331-9.984 2.752-15.5732 5.696-24.9171 5.696-22.0158 0-39.9996-17.9412-39.9996-40.149 0-21.781 10.5599-36.757 31.8503-42.6662C281.4071 460.2025 340.18 448 425.7257 448m7.0828 170.6667c112.0415 0 211.8805 25.7064 297.8103 77.2045 12.7786 7.4666 20.2878 15.1039 20.2878 34.0264 0 18.4531-15.0185 32.021-31.8503 32.021-8.2773 0-13.9306-2.88-21.6745-7.5946-74.1966-44.885-166.7183-68.5007-264.9147-68.5007-54.7834 0-109.9295 7.0186-161.4917 17.7705-8.3839 1.8133-18.9438 5.056-25.237 5.056-19.4345 0-32.405-15.4452-32.405-32.1704 0-21.5464 12.4158-32.2343 27.861-35.1783 63.2314-14.4212 126.228-22.6344 191.6354-22.6344" fill="#{{ accent }}" />
+          <circle fill="url(#a)" cx="512" cy="512" r="512" />
         </g>
       </svg>
       <div class="panel">

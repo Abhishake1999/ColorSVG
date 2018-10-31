@@ -24,6 +24,11 @@ angular.module('myApp', ['color.picker']).controller('myCtrl', ($scope, $http) =
       name: 'DigitalOcean',
       description: 'code deployment',
     },
+    {
+      id: 'spotify',
+      name: 'Spotify',
+      description: 'music',
+    }
   ];
   $scope.icon = {
     index: 0,
